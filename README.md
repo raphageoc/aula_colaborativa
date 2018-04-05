@@ -8,3 +8,4 @@ O objetivo deste projeto é construir um web mapa colaborativamente, ou seja, ca
  #### modifica o local de trabalho para dentro do projeto - cd aula_colaborativa
  #### cria um novo branch localmente - git branch <"nome do seu issue">
  #### cria um novo branch no repositorio remoto e também envia as modificações feitas no branch - git push origin <"nome do seu issue">
+ #### sincroniza o repositorio local com o remoto - git pull
