@@ -3,7 +3,7 @@ window.onload = function() {
 
   //1 - Mapa centrado em Curitiba
 	var map = L.map("meumapa", {
-		center: [-25.45, -49.25],
+		center: [-25.47, -49.27],
 		zoom: 12,
 		zoomSnap: 0.5,
 		zoomDelta: 0.5,
@@ -52,11 +52,10 @@ window.onload = function() {
 	}).addTo(map);
 
 	//6 - Popup com as coordenadas no click do usuario
-
-	// map.on("click", function(evento) {
-	// 	L.popup()
-  //   .getLatLng(latlng)
-  //   .setContent('<p>Hello world!<br />This is a nice popup.</p>')
-  //   .openOn(map);
-	// });
+	map.on("click", function(evento) {
+			var popup = L.popup()
+			.setLatLng(evento.latlng)
+			.setContent("<b>Você clicou em: </b><br />" + evento.latlng)
+			.openOn(map);
+	});
 }
