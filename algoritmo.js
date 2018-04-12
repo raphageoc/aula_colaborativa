@@ -27,12 +27,7 @@ window.onload = function() {
 
   //2 - Camadas base
 
-	var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-	var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-})
-;
+	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
   //3 Basemap
 
@@ -74,7 +69,7 @@ format: "image/png"
 //adicionando o GEOJson
     L.geoJSON(geoj8, {
         pointToLayer: function(feicao, posicao){
-    return L.marker(posicao, {icon: simbolo[157]});
+    return L.marker(posicao, {icon: simbolo[20]});
     },
   onEachFeature: function (feicao, camada){
     camada.bindTooltip(feicao.properties.NOME)
@@ -84,6 +79,6 @@ format: "image/png"
 
 //var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
 var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-L.Control.MiniMap(osmVisaoGeral).addTo(mapa);
+L.Control.MiniMap(basemap8).addTo(mapa);
 
 }
