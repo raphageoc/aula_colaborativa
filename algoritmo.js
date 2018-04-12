@@ -11,9 +11,28 @@ window.onload = function() {
 		maxZoom: 18
 	});
 
+	var Simbolo = L.Icon.extend({
+	    options: {
+	    iconSize: [30, 30],
+	    iconAnchor: [15, 15],
+	    popupAnchor: [0, -15]
+	    }
+	    });
+
+	  var simbolo = [];
+
+	  for(var i=0;i<=174;i++){
+	    simbolo[i] = new Simbolo({iconUrl: "dados/simbolos/"+i+".svg"});
+	  }
+
   //2 - Camadas base
 
-	var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+	var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+	var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+})
+;
 
   //3 Basemap
 
@@ -35,20 +54,37 @@ format: "image/png"
 
 
 //adicionando o shape
-L.geoJSON(geoj8
-	, {
-  style: function(feicao){
-        cores = "#b15928";
-        return{
-      weight: 0.2,
-      color: "#33a02c",
-      fillColor: cores[feicao.properties.NOME-1],
-      fillOpacity: 0.5
-    }
-  },
+// L.geoJSON(geoj8
+// 	, {
+//   style: function(feicao){
+//         cores = "#b15928";
+//         return{
+//       weight: 0.2,
+//       color: "#33a02c",
+//       fillColor: cores[feicao.properties.NOME-1],
+//       fillOpacity: 0.5
+//     }
+//   },
+//   onEachFeature: function (feicao, camada){
+//     camada.bindTooltip(feicao.properties.NOME)
+//   }
+// }
+// ).addTo(map);
+
+//adicionando o GEOJson
+    L.geoJSON(geoj8, {
+        pointToLayer: function(feicao, posicao){
+    return L.marker(posicao, {icon: simbolo[157]});
+    },
   onEachFeature: function (feicao, camada){
     camada.bindTooltip(feicao.properties.NOME)
   }
-}
-).addTo(map);
+}).addTo(map);
+//minimapa
+
+var miniMap = new L.Control.MiniMap(OpenStreetMap_BlackAndWhite).addTo(map);
+
+//var osmVisaoGeral = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+//L.Control.MiniMap(osmVisaoGeral).addTo(map);
+//var miniMap = new L.Control.MiniMap(osmVisaoGeral).addTo(map);
 }
