@@ -29,6 +29,15 @@ window.onload = function() {
 	format: 'image/png'
 }).addTo(map);
 
+	// Teste de mini mapa
+	//Adicionando um mini mapa
+	var CartoDB_Positron_2 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+ 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+ 	subdomains: 'abcd',
+ 	maxZoom: 19
+ });
+	var miniMap = new L.Control.MiniMap(CartoDB_Positron_2).addTo(map);
+
 	//5 - Criando a classe dos símbolos personalizados
 	var Simbolo = L.Icon.extend ({
 		options: {
