@@ -82,9 +82,8 @@ format: "image/png"
 }).addTo(map);
 //minimapa
 
-var miniMap = new L.Control.MiniMap(OpenStreetMap_BlackAndWhite).addTo(map);
+//var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
+var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+L.Control.MiniMap(osmVisaoGeral).addTo(mapa);
 
-//var osmVisaoGeral = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-//L.Control.MiniMap(osmVisaoGeral).addTo(map);
-//var miniMap = new L.Control.MiniMap(osmVisaoGeral).addTo(map);
 }
