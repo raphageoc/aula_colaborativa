@@ -27,7 +27,7 @@ window.onload = function() {
  // }).addTo(map);
 
 //var geoj11 = L.geoJSON(pracasjardinetes).addTo(map);
-//var school = L.geoJSON(escola).addTo(map);
+var school = L.geoJSON(escola).addTo(map);
 
 // Concluir função
 // var heat = L.heatLayer([
