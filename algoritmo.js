@@ -49,18 +49,22 @@ window.onload = function() {
 
 	//adicionando o GEOJson
 	L.geoJSON(geoj5, {
-  style: function(feicao){
-			cores = "b15928";
-			return{
-      weight: 0.2,
-      color: "#33a02c",
-      fillColor: cores[feicao.properties.NOME-1],
-      fillOpacity: 0.5
-    }
-  },
+		pointToLayer: function(feicao, posicao){
+	return L.marker(posicao, {icon: simbolo[149]});
+    },
   onEachFeature: function (feicao, camada){
     camada.bindTooltip(feicao.properties.NOME)
   }
+}).addTo(map);
+
+// Specify divisions every 10 degrees
+L.graticule({ interval: 0.1 }).addTo(map);
+// Specify bold red lines instead of thin grey lines
+L.graticule({
+    style: {
+        color: '#f00',
+        weight: 1
+    }
 }).addTo(map);
 
 }
