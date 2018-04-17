@@ -15,7 +15,35 @@ window.onload = function() {
 		maxZoom: 18
 	});
 
-	var Simbolo = L.Icon.extend({
+	
+
+  //3 Basemap
+
+	//Mapbox
+var basemap8 = L.tileLayer(
+'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+{
+id:"mapbox.streets",
+accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
+}
+).addTo(map);
+//adicionando wms
+L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
+layers: "geonode:academia_ao_ar_livre",
+transparent: 'true',
+format: "image/png"
+}).addTo(map);
+
+
+
+
+
+//adicionando o GEOJson
+    L.geoJSON(geoj8, {
+        pointToLayer: function(feicao, posicao){
+    return L.marker(posicao, {icon: simbolo[20]});
+    },
+var Simbolo = L.Icon.extend({
     options: {
     iconSize: [30, 30],
     iconAnchor: [15, 15],
@@ -29,9 +57,7 @@ window.onload = function() {
     simbolo[i] = new Simbolo({iconUrl: "Plugins/dados/simbolos/"+i+".svg"});
   }
 
-  //2 - Camadas base
-
-	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+ 
 
 	// //Mapbox
 	var basemap5 = L.tileLayer(
@@ -121,20 +147,12 @@ window.onload = function() {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 }).addTo(map);
 
-	// var wms11 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
- //   layers: 'geonode:escola_municipal_1',
- //   transparent: 'true',
- //   format: 'image/png'
- // }).addTo(map);
+
 
 //var geoj11 = L.geoJSON(pracasjardinetes).addTo(map);
 var school = L.geoJSON(escola).addTo(map);
 
-// Concluir função
-// var heat = L.heatLayer([
-// 	[-25.45, -49.25, 10.8], // lat, lng, intensity
-// 	[-25.48, -49.58, 0.5]
-// ], {radius: 10}).addTo(map);
+
 
 var heatescolas = L.heatLayer([
 [-25.5308344996999992,-49.3398821338000033, 10.8],
@@ -524,11 +542,15 @@ L.geoJSON(geoj6, {
       fillOpacity: 0.5
     }
   },
-
   onEachFeature: function (feicao, camada){
     camada.bindTooltip(feicao.properties.NOME)
   }
 }).addTo(map);
+
+//var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
+var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+L.Control.MiniMap(basemap8).addTo(mapa);
+
 
 
 // Specify divisions every 10 degrees
@@ -549,6 +571,7 @@ transparent: "true",
 format: "image/png"
 });
 t = L.map('dist', { measureControl:true });
+
 
 
 
