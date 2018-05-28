@@ -314,53 +314,53 @@ var heatescolas = L.heatLayer([
 	}).addTo(map);
 
 	//Controle de Camadas
-	var basecarto = {
-		"OpenStreetMap": osmColorido,
-		"OSM Black and White": basemap9,
-		"Esri De Lorme": basemap1,
-		"Mapbox Comic": basemap2,
-		"Mapbox Dark": basemap6,
-		"Mapbox Street": basemap8,
-		"Mapbox Outdoors": basemap5,
-		"Mapbox High Contrast": basemap7,
-		"Esri World Imagery": basemap10,
-		"OSM Hot": basemap11,
-		"OSM De": basemap12,
-		"Carto DB Positron": basemap4,
-		"Mapbox Street Satellite": basemap14,
-	  "Open Topo Map": basemap15
-	};
-
-	var feicoes = {
-		"Ciclovias WMS": wms9,
-	  "Altimetria WMS": wms1,
-		"Hospitais WMS": wms2,
-		"Lotes WMS": wms6,
-		"Academias ao ar livre WMS": wms8,
-		"Terminais de Transporte WMS": wms5,
-		"Creche/Jardinete WMS": wms7,
-		"Hidrografia WMS": wms10,
-		"Escola Municipal WMS": wms11,
-		"Ferrovias WMS": wms12,
-		"Ocupações Irregulares WMS": wms4,
-		"CAPs (Centro de Atenção Psicosocial) WMS": wms15,
-		"academias JSON": geoj9
-		"Divisas/Regionais JSON": geoj6,
-		"Cemitérios JSON": geoj2,
-		"Altimetria JSON": geojson1,
-		"Terminais de Transpote JSON": geoj8,
-		"Ruas da Cidadania JSON": geoj5,
-		"Ciclovias JSON": geo7,
-		"Hidrografia Polígono JSON": geojson10,
-		"Praças e Jardinetes JSON": geoj11,
-		"Eixos de Rua JSON": geoj12,
-		"Escolas Municipais JSON": geoj4,
-		"Divisas de Bairro JSON": geo14,
-		"Unidades de Saúde JSON": geo15
-	};
-
-	//Adicionar objetos ao controle de camadas
-	L.control.layers(basecarto, feicoes).addTo(map);
+	// var basecarto = {
+	// 	"OpenStreetMap": osmColorido,
+	// 	"OSM Black and White": basemap9,
+	// 	"Esri De Lorme": basemap1,
+	// 	"Mapbox Comic": basemap2,
+	// 	"Mapbox Dark": basemap6,
+	// 	"Mapbox Street": basemap8,
+	// 	"Mapbox Outdoors": basemap5,
+	// 	"Mapbox High Contrast": basemap7,
+	// 	"Esri World Imagery": basemap10,
+	// 	"OSM Hot": basemap11,
+	// 	"OSM De": basemap12,
+	// 	"Carto DB Positron": basemap4,
+	// 	"Mapbox Street Satellite": basemap14,
+	//   "Open Topo Map": basemap15
+	// };
+	//
+	// var feicoes = {
+	// 	"Ciclovias WMS": wms9,
+	//   "Altimetria WMS": wms1,
+	// 	"Hospitais WMS": wms2,
+	// 	"Lotes WMS": wms6,
+	// 	"Academias ao ar livre WMS": wms8,
+	// 	"Terminais de Transporte WMS": wms5,
+	// 	"Creche/Jardinete WMS": wms7,
+	// 	"Hidrografia WMS": wms10,
+	// 	"Escola Municipal WMS": wms11,
+	// 	"Ferrovias WMS": wms12,
+	// 	"Ocupações Irregulares WMS": wms4,
+	// 	"CAPs (Centro de Atenção Psicosocial) WMS": wms15,
+	// 	"academias JSON": geoj9
+	// 	"Divisas/Regionais JSON": geoj6,
+	// 	"Cemitérios JSON": geoj2,
+	// 	"Altimetria JSON": geojson1,
+	// 	"Terminais de Transpote JSON": geoj8,
+	// 	"Ruas da Cidadania JSON": geoj5,
+	// 	"Ciclovias JSON": geo7,
+	// 	"Hidrografia Polígono JSON": geojson10,
+	// 	"Praças e Jardinetes JSON": geoj11,
+	// 	"Eixos de Rua JSON": geoj12,
+	// 	"Escolas Municipais JSON": geoj4,
+	// 	"Divisas de Bairro JSON": geo14,
+	// 	"Unidades de Saúde JSON": geo15
+	// };
+	//
+	// //Adicionar objetos ao controle de camadas
+	// L.control.layers(basecarto, feicoes).addTo(map);
 
 	// var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
@@ -403,7 +403,7 @@ layers: "geonode:lotes_201702",
 transparent: "true",
 format: "image/png"
 });
-t = L.map('dist', { measureControl:true });
+// t = L.map('dist', { measureControl:true });
 
 
 
