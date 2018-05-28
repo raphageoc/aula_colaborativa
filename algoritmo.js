@@ -55,6 +55,6 @@ layers: "geonode:lotes_201702",
 transparent: "true",
 format: "image/png"
 }).addTo(map);
-t = L.map('dist', { measureControl:true });
+
 
 }
