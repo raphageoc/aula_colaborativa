@@ -404,7 +404,6 @@ var heatescolas = L.heatLayer([
 
 //adicionando o shape
 
-// t = L.map('dist', { measureControl:true });
 
 
 
