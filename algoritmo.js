@@ -15,7 +15,88 @@ window.onload = function() {
 		maxZoom: 18
 	});
 
-	var Simbolo = L.Icon.extend({
+
+
+
+  //2 - Camadas base
+	var basemap12 = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+	maxZoom: 18,
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+
+	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+
+//adicionando arquivo wms
+	var wms12 = L.tileLayer.wms('http://www.idea.ufpr.br/geoserver/geonode/wms',
+	{layers: 'geonode:rrfsa_ferrovias',
+transparent: 'true',
+format: 'image/png'
+}).addTo(map);
+
+
+var estiloLinhaePoligono12 = {
+	color: "#8856a7",
+	fillColor: "#8856a7",
+	weight: 1,
+	opacity: 1,
+	fillOpacity: 0.5
+};
+
+L.geoJSON(geoj12, {
+style: estiloLinhaePoligono12
+}).addTo(map);
+
+//criando símbolo
+var Simbolo = L.Icon.extend({
+	options: {
+	iconSize: [30, 30],
+	iconAnchor: [15, 15],
+	popupAnchor: [0, -15]
+	}
+	});
+
+		var simbolo = [];
+		for(var i=0; i<=174; i++) {
+		simbolo[i] = new Simbolo({iconUrl: "dados/simbolos/" + i + ".svg"});
+	}
+
+//evento que mostra a localização, porém ainda não mostrou
+ mapa.on("locationfound", function(evento) {
+    L.marker(evento.latlng, {icon: simbolo[12]}).addTo(map);
+    L.circle(evento.latlng, evento.accuracy).addTo(map);
+    });
+
+ L.marker([-25.5, -49.25], {icon: simbolo[139]}).addTo(map).bindPopup("minha localização!");
+
+	
+
+  //3 Basemap
+
+	//Mapbox
+var basemap8 = L.tileLayer(
+'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+{
+id:"mapbox.streets",
+accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
+}
+).addTo(map);
+//adicionando wms
+L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
+layers: "geonode:academia_ao_ar_livre",
+transparent: 'true',
+format: "image/png"
+}).addTo(map);
+
+
+
+
+
+//adicionando o GEOJson
+    L.geoJSON(geoj8, {
+        pointToLayer: function(feicao, posicao){
+    return L.marker(posicao, {icon: simbolo[20]});
+    },
+var Simbolo = L.Icon.extend({
     options: {
     iconSize: [30, 30],
     iconAnchor: [15, 15],
@@ -29,9 +110,7 @@ window.onload = function() {
     simbolo[i] = new Simbolo({iconUrl: "Plugins/dados/simbolos/"+i+".svg"});
   }
 
-  //2 - Camadas base
-
-	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+ 
 
 	//Mapbox
 	var basemap5 = L.tileLayer(
@@ -131,11 +210,13 @@ window.onload = function() {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 }).addTo(map);
 
+
 	var wms11 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
    layers: 'geonode:escola_municipal_1',
    transparent: 'true',
    format: 'image/png'
  }).addTo(map);
+
 
 var geo11 = L.geoJSON(pracasjardinetes).addTo(map);
 var school = L.geoJSON(escola).addTo(map);
@@ -502,15 +583,63 @@ var heatescolas = L.heatLayer([
 
 	//Mapbox
 
+var basemap7 = L.tileLayer(
+'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+{
+
+id:"mapbox.high-contrast",
+
+accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
+}
+).addTo(map);
+
+
+
+
 //Adicionar camada WMS ao mapa
-// var limite = L.tileLayer.wms("http://localhost:8082/geoserver/wms", {
-// layers: "cite:lim_municipio_a",
-// transparent: "true",
-// format: "image/png"
-// }).addTo(mapa);
+L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms"
+, {
+layers: "geonode:cmei",
+transparent: "true",
+format: "image/png"
+}).addTo(map);
 
+//adicionando o shape geojason ciclovia
+L.geoJSON(geojson7, {
+  style: function(feicao){
+        return{
+      weight: 3,
+      color: "#FF0000",
+      fillOpacity: 0
+    }
+  },
+  onEachFeature: function (feicao, camada){
+    camada.bindTooltip(feicao.properties.TIPO)
+  }
+}).addTo(map);
+
+var estiloLinhaPonto = {
+	color: "#00008B",
+	fillColor: "#FA8072",
+	weight: 2,
+	opacity: 50,
+	fillOpacity: 0
+};
 //adicionando o shape
+ L.geoJSON(divisadebairros, {
+ style: estiloLinhaPonto,
+ onEachFeature: function (feicao, camada){
+ 	camada.bindTooltip(feicao.properties.NOME)
+  }
+}).addTo(map);
 
+
+
+
+
+//var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
+var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+L.Control.MiniMap(basemap8).addTo(mapa);
 
 
 
@@ -523,6 +652,9 @@ L.graticule({
         weight: 1
     }
 }).addTo(map);
+
+
+
 
 
 
