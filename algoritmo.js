@@ -4,19 +4,117 @@ window.onload = function() {
   //1 - Mapa centrado em Curitiba
 	var map = L.map("meumapa", {
 
+
 		measureControl:true,
 		center: [-25.45, -49.25],
 		zoom: 15,
+
 		zoomSnap: 0.5,
 		zoomDelta: 0.5,
 		minZoom: 0,
 		maxZoom: 18
 	});
 
+	var Simbolo = L.Icon.extend({
+    options: {
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    popupAnchor: [0, -15]
+    }
+    });
+
+  var simbolo = [];
+
+  for(var i=0;i<=174;i++){
+    simbolo[i] = new Simbolo({iconUrl: "Plugins/dados/simbolos/"+i+".svg"});
+  }
+
+  //2 - Camadas base
+
+	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+	// //Mapbox
+	var basemap5 = L.tileLayer(
+		'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+		{
+			id:"mapbox.outdoors",
+			accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
+		}
+	).addTo(map);
+
+	// //Adicionar camada WMS ao mapa
+	var wms5 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms",
+		{
+			layers: "geonode:terminal_de_transporte",
+			transparent: "true",
+			format: "image/png"
+		}).addTo(map);
+
+
+	//adicionando o GEOJson
+	L.geoJSON(geoj5, {
+		pointToLayer: function(feicao, posicao){
+	return L.marker(posicao, {icon: simbolo[149]});
+    },
+
   //2 - Camadas base
 
 
-	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+	var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+
+	//3 - Adicionando a base
+	var basemap4 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+}).addTo(map);
+
+	//4 - Adicionando o WMS
+	var wms4 = L.tileLayer.wms('http://www.idea.ufpr.br/geoserver/geonode/wms', {
+	layers:'geonode:ocupacao_irregular',
+	transparent: 'true',
+	format: 'image/png'
+}).addTo(map);
+
+	// Teste de mini mapa
+	//Adicionando um mini mapa
+	var CartoDB_Positron_2 = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+ 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+ 	subdomains: 'abcd',
+ 	maxZoom: 19
+ });
+	var miniMap = new L.Control.MiniMap(CartoDB_Positron_2).addTo(map);
+
+	//5 - Criando a classe dos símbolos personalizados
+	var Simbolo = L.Icon.extend ({
+		options: {
+			iconSize: [20, 20],
+			iconAnchor: [10, 10],
+			popupAnchor: [0, -10]
+	}
+	});
+
+	//5 - Armazenando as imagens svg em um vetor
+	var simbolo = [];
+	for(var i=0; i<=174; i++) {
+		simbolo[i] = new Simbolo({iconUrl: "dados/simbolos/" + i + ".svg"});
+	}
+
+	//5 - Adicionando o geoJSON
+	L.geoJSON(geoj4, {
+		pointToLayer: function(feicao, posicao) {
+			return L.marker(posicao, {icon: simbolo[85]});
+		}
+	}).addTo(map);
+
+	//6 - Popup com as coordenadas no click do usuario
+	map.on("click", function(evento) {
+			var popup = L.popup()
+			.setLatLng(evento.latlng)
+			.setContent("<b>Você clicou em: </b><br />" + evento.latlng)
+			.openOn(map);
+	});
+
 
 	var basemap11 = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 	maxZoom: 19,
@@ -266,7 +364,6 @@ var heatescolas = L.heatLayer([
 				 }).addTo(map);*/
 
 
-	var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
 	var basemap9 = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
 	maxZoom: 18,
@@ -403,6 +500,22 @@ var heatescolas = L.heatLayer([
 // }).addTo(mapa);
 
 //adicionando o shape
+
+
+
+
+// Specify divisions every 10 degrees
+L.graticule({ interval: 0.1 }).addTo(map);
+// Specify bold red lines instead of thin grey lines
+L.graticule({
+    style: {
+        color: '#f00',
+        weight: 1
+    }
+}).addTo(map);
+
+
+
 
 
 
