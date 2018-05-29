@@ -33,12 +33,14 @@ window.onload = function() {
 
 	//var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-	// //Mapbox
+	//Mapbox
 	var basemap5 = L.tileLayer(
 		'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
 		{
 			id:"mapbox.outdoors",
-			accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
+			accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ",
+			maxZoom: 19
+
 		}
 	).addTo(map);
 
@@ -52,10 +54,18 @@ window.onload = function() {
 
 
 	//adicionando o GEOJson
-	L.geoJSON(geoj5, {
+	var geo5 = L.geoJSON(geoj5, {
 		pointToLayer: function(feicao, posicao){
 	return L.marker(posicao, {icon: simbolo[149]});
-    },
+}
+}).addTo(map);
+// var geo4 = L.geoJSON(geoj4, {
+// 	pointToLayer: function(feicao, posicao) {
+// 		return L.marker(posicao, {icon: simbolo[85]});
+// 	}
+// }).addTo(map);
+
+
 
   //2 - Camadas base
 
@@ -101,7 +111,7 @@ window.onload = function() {
 	}
 
 	//5 - Adicionando o geoJSON
-	L.geoJSON(geoj4, {
+	var geo4 = L.geoJSON(geoj4, {
 		pointToLayer: function(feicao, posicao) {
 			return L.marker(posicao, {icon: simbolo[85]});
 		}
@@ -121,13 +131,13 @@ window.onload = function() {
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>'
 }).addTo(map);
 
-	// var wms11 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
- //   layers: 'geonode:escola_municipal_1',
- //   transparent: 'true',
- //   format: 'image/png'
- // }).addTo(map);
+	var wms11 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
+   layers: 'geonode:escola_municipal_1',
+   transparent: 'true',
+   format: 'image/png'
+ }).addTo(map);
 
-//var geoj11 = L.geoJSON(pracasjardinetes).addTo(map);
+var geo11 = L.geoJSON(pracasjardinetes).addTo(map);
 var school = L.geoJSON(escola).addTo(map);
 
 
@@ -445,12 +455,12 @@ var heatescolas = L.heatLayer([
 		// "Mapbox Comic": basemap2,
 		// "Mapbox Dark": basemap6,
 		// "Mapbox Street": basemap8,
-		// "Mapbox Outdoors": basemap5,
+		"Mapbox Outdoors": basemap5,
 		"Mapbox High Contrast": basemap7,
 		// "Esri World Imagery": basemap10,
 		"OSM Hot": basemap11,
 		// "OSM De": basemap12,
-		// "Carto DB Positron": basemap4,
+		"Carto DB Positron": basemap4,
 		// "Mapbox Street Satellite": basemap14,
 	  // "Open Topo Map": basemap15
 	};
@@ -463,24 +473,24 @@ var heatescolas = L.heatLayer([
 		// "Hospitais WMS": wms2,
 		"Lotes WMS": wms6,
 		// "Academias ao ar livre WMS": wms8,
-		// "Terminais de Transporte WMS": wms5,
+		"Terminais de Transporte WMS": wms5,
 		// "Creche/Jardinete WMS": wms7,
 		// "Hidrografia WMS": wms10,
-		// "Escola Municipal WMS": wms11,
+		"Escola Municipal WMS": wms11,
 		// "Ferrovias WMS": wms12,
-		// "Ocupações Irregulares WMS": wms4,
+		"Ocupações Irregulares WMS": wms4,
 		// "CAPs (Centro de Atenção Psicosocial) WMS": wms15,
 		"academias JSON": geo9,
 		"Divisas/Regionais JSON": geo6,
 		// "Cemitérios JSON": geoj2,
-		"Altimetria JSON": geo1
+		"Altimetria JSON": geo1,
 		// "Terminais de Transpote JSON": geoj8,
-		// "Ruas da Cidadania JSON": geoj5,
+		"Ruas da Cidadania JSON": geo5,
 		// "Ciclovias JSON": geo7,
 		// "Hidrografia Polígono JSON": geojson10,
-		// "Praças e Jardinetes JSON": geoj11,
+		"Praças e Jardinetes JSON": geo11,
 		// "Eixos de Rua JSON": geoj12,
-		// "Escolas Municipais JSON": geoj4,
+		"Escolas Municipais JSON": geo4,
 		// "Divisas de Bairro JSON": geo14,
 		// "Unidades de Saúde JSON": geo15
 	};
