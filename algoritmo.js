@@ -33,7 +33,7 @@ L.control.betterscale({metric:true, imperial:false}).addTo(map);
 	{layers: 'geonode:rrfsa_ferrovias',
 transparent: 'true',
 format: 'image/png'
-}).addTo(map);
+});
 
 
 var estiloLinhaePoligono12 = {
@@ -46,7 +46,7 @@ var estiloLinhaePoligono12 = {
 
 var geo12 = L.geoJSON(geoj12, {
 style: estiloLinhaePoligono12
-}).addTo(map);
+});
 
 //criando símbolo
 var Simbolo = L.Icon.extend({
@@ -76,11 +76,11 @@ accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2p
 }
 ).addTo(map);
 //adicionando wms
-L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
+var wms8 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms", {
 layers: "geonode:academia_ao_ar_livre",
 transparent: 'true',
 format: "image/png"
-}).addTo(map);
+});
 
 
 
@@ -124,7 +124,7 @@ var Simbolo = L.Icon.extend({
 			layers: "geonode:terminal_de_transporte",
 			transparent: "true",
 			format: "image/png"
-		}).addTo(map);
+		});
 
 
 	//adicionando o GEOJson
@@ -132,7 +132,7 @@ var Simbolo = L.Icon.extend({
 		pointToLayer: function(feicao, posicao){
 	return L.marker(posicao, {icon: simbolo[149]});
 }
-}).addTo(map);
+});
 // var geo4 = L.geoJSON(geoj4, {
 // 	pointToLayer: function(feicao, posicao) {
 // 		return L.marker(posicao, {icon: simbolo[85]});
@@ -158,7 +158,7 @@ var Simbolo = L.Icon.extend({
 	layers:'geonode:ocupacao_irregular',
 	transparent: 'true',
 	format: 'image/png'
-}).addTo(map);
+});
 
 	// Teste de mini mapa
 	//Adicionando um mini mapa
@@ -189,7 +189,7 @@ var Simbolo = L.Icon.extend({
 		pointToLayer: function(feicao, posicao) {
 			return L.marker(posicao, {icon: simbolo[85]});
 		}
-	}).addTo(map);
+	});
 
 	//6 - Popup com as coordenadas no click do usuario
 	map.on("click", function(evento) {
@@ -210,11 +210,11 @@ var Simbolo = L.Icon.extend({
    layers: 'geonode:escola_municipal_1',
    transparent: 'true',
    format: 'image/png'
- }).addTo(map);
+ });
 
 
-var geo11 = L.geoJSON(pracasjardinetes).addTo(map);
-var school = L.geoJSON(escola).addTo(map);
+var geo11 = L.geoJSON(pracasjardinetes);
+var school = L.geoJSON(escola);
 
 
 
@@ -421,7 +421,7 @@ var heatescolas = L.heatLayer([
              layers: "geonode:altimetria_ippuc_curitiba_wgs84",
 						 transparent: "true",
              format: "image/png"
-             }).addTo(map);
+             });
 
   //Adicionar GeoJson
 	var estilogeojson1 = {
@@ -436,7 +436,7 @@ var heatescolas = L.heatLayer([
   //Aplicar estilos ao criar as camadas GeoJSON
 	var geo1 = L.geoJSON(geojson1, {
       style: estilogeojson1
-	    }).addTo(map);
+	    });
 
   //Adicionar barra de ferramentas
 	var barraferramentas = L.control.navbar({
@@ -461,7 +461,7 @@ var heatescolas = L.heatLayer([
 		layers:'geonode:ciclovia_oficial',
 		transparent: 'true',
 		format:'image/png'
-	}).addTo(map);
+	});
 
 
 	//First, specify your Mapbox API access token
@@ -490,7 +490,7 @@ var heatescolas = L.heatLayer([
 		pointToLayer: function(feicao,posicao) {
 			return L.marker(posicao, {icon: icon});
 		}
-	}).addTo(map);
+	});
 
 	var geo6 = L.geoJSON(geoj6, {
 	  style: function(feicao){
@@ -505,7 +505,7 @@ var heatescolas = L.heatLayer([
 	  onEachFeature: function (feicao, camada){
 	    camada.bindTooltip(feicao.properties.NOME)
 	  }
-	}).addTo(map);
+	});
 
 	//Adicionar camada WMS ao mapa
 	var wms6 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms"
@@ -528,7 +528,7 @@ var heatescolas = L.heatLayer([
 	layers: "geonode:cmei",
 	transparent: "true",
 	format: "image/png"
-	}).addTo(map);
+	});
 
 	//adicionando o shape geojason ciclovia
 	var geo7 = L.geoJSON(geojson7, {
@@ -542,7 +542,7 @@ var heatescolas = L.heatLayer([
 	  onEachFeature: function (feicao, camada){
 	    camada.bindTooltip(feicao.properties.TIPO)
 	  }
-	}).addTo(map);
+	});
 
 	var estiloLinhaPonto = {
 		color: "#00008B",
@@ -593,7 +593,7 @@ var heatescolas = L.heatLayer([
 	  "Altimetria WMS": wms1,
 		// "Hospitais WMS": wms2,
 		"Lotes WMS": wms6,
-		// "Academias ao ar livre WMS": wms8,
+		"Academias ao ar livre WMS": wms8,
 		"Terminais de Transporte WMS": wms5,
 		"Creche/Jardinete WMS": wms7,
 		// "Hidrografia WMS": wms10,
