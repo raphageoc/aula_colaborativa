@@ -1,13 +1,15 @@
+//1 - Mapa centrado em Curitiba
+var map
+
 window.onload = function() {
 
 
-  //1 - Mapa centrado em Curitiba
-	var map = L.map("meumapa", {
+    map = L.map("meumapa", {
 
 
 		measureControl:true,
 		center: [-25.45, -49.25],
-		zoom: 15,
+		zoom: 11,
 
 		zoomSnap: 0.5,
 		zoomDelta: 0.5,
@@ -15,7 +17,7 @@ window.onload = function() {
 		maxZoom: 18
 	});
 
-
+L.control.betterscale({metric:true, imperial:false}).addTo(map);
 
 
   //2 - Camadas base
@@ -42,7 +44,7 @@ var estiloLinhaePoligono12 = {
 	fillOpacity: 0.5
 };
 
-L.geoJSON(geoj12, {
+var geo12 = L.geoJSON(geoj12, {
 style: estiloLinhaePoligono12
 }).addTo(map);
 
@@ -61,14 +63,7 @@ var Simbolo = L.Icon.extend({
 	}
 
 //evento que mostra a localização, porém ainda não mostrou
- mapa.on("locationfound", function(evento) {
-    L.marker(evento.latlng, {icon: simbolo[12]}).addTo(map);
-    L.circle(evento.latlng, evento.accuracy).addTo(map);
-    });
 
- L.marker([-25.5, -49.25], {icon: simbolo[139]}).addTo(map).bindPopup("minha localização!");
-
-	
 
   //3 Basemap
 
@@ -92,10 +87,10 @@ format: "image/png"
 
 
 //adicionando o GEOJson
-    L.geoJSON(geoj8, {
+  var geo8 = L.geoJSON(geoj8, {
         pointToLayer: function(feicao, posicao){
     return L.marker(posicao, {icon: simbolo[20]});
-    },
+	}});
 var Simbolo = L.Icon.extend({
     options: {
     iconSize: [30, 30],
@@ -110,7 +105,7 @@ var Simbolo = L.Icon.extend({
     simbolo[i] = new Simbolo({iconUrl: "Plugins/dados/simbolos/"+i+".svg"});
   }
 
- 
+
 
 	//Mapbox
 	var basemap5 = L.tileLayer(
@@ -527,6 +522,51 @@ var heatescolas = L.heatLayer([
 	}
 	).addTo(map);
 
+	//Adicionar camada WMS ao mapa
+	var wms7 = L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms"
+	, {
+	layers: "geonode:cmei",
+	transparent: "true",
+	format: "image/png"
+	}).addTo(map);
+
+	//adicionando o shape geojason ciclovia
+	var geo7 = L.geoJSON(geojson7, {
+	  style: function(feicao){
+	        return{
+	      weight: 3,
+	      color: "#FF0000",
+	      fillOpacity: 0
+	    }
+	  },
+	  onEachFeature: function (feicao, camada){
+	    camada.bindTooltip(feicao.properties.TIPO)
+	  }
+	}).addTo(map);
+
+	var estiloLinhaPonto = {
+		color: "#00008B",
+		fillColor: "#FA8072",
+		weight: 2,
+		opacity: 50,
+		fillOpacity: 0
+	};
+	//adicionando o shape
+	 var div_b = L.geoJSON(divisadebairros, {
+	 style: estiloLinhaPonto,
+	 onEachFeature: function (feicao, camada){
+	 	camada.bindTooltip(feicao.properties.NOME)
+	  }
+	}).addTo(map);
+
+
+
+
+
+	//var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
+	var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+	// L.Control.MiniMap(basemap8).addTo(mapa);
+
 
 	// Controle de Camadas
 	var basecarto = {
@@ -535,12 +575,12 @@ var heatescolas = L.heatLayer([
 		"Esri De Lorme": basemap1,
 		// "Mapbox Comic": basemap2,
 		// "Mapbox Dark": basemap6,
-		// "Mapbox Street": basemap8,
+		"Mapbox Street": basemap8,
 		"Mapbox Outdoors": basemap5,
 		"Mapbox High Contrast": basemap7,
 		// "Esri World Imagery": basemap10,
 		"OSM Hot": basemap11,
-		// "OSM De": basemap12,
+		"OSM De": basemap12,
 		"Carto DB Positron": basemap4,
 		// "Mapbox Street Satellite": basemap14,
 	  // "Open Topo Map": basemap15
@@ -555,24 +595,24 @@ var heatescolas = L.heatLayer([
 		"Lotes WMS": wms6,
 		// "Academias ao ar livre WMS": wms8,
 		"Terminais de Transporte WMS": wms5,
-		// "Creche/Jardinete WMS": wms7,
+		"Creche/Jardinete WMS": wms7,
 		// "Hidrografia WMS": wms10,
 		"Escola Municipal WMS": wms11,
-		// "Ferrovias WMS": wms12,
+		"Ferrovias WMS": wms12,
 		"Ocupações Irregulares WMS": wms4,
 		// "CAPs (Centro de Atenção Psicosocial) WMS": wms15,
 		"academias JSON": geo9,
 		"Divisas/Regionais JSON": geo6,
 		// "Cemitérios JSON": geoj2,
 		"Altimetria JSON": geo1,
-		// "Terminais de Transpote JSON": geoj8,
+		"Terminais de Transpote JSON": geo8,
 		"Ruas da Cidadania JSON": geo5,
-		// "Ciclovias JSON": geo7,
+		"Ciclovias JSON": geo7,
 		// "Hidrografia Polígono JSON": geojson10,
 		"Praças e Jardinetes JSON": geo11,
-		// "Eixos de Rua JSON": geoj12,
+		"Eixos de Rua JSON": geo12,
 		"Escolas Municipais JSON": geo4,
-		// "Divisas de Bairro JSON": geo14,
+		"Divisas de Bairro JSON": div_b,
 		// "Unidades de Saúde JSON": geo15
 	};
 
@@ -580,68 +620,6 @@ var heatescolas = L.heatLayer([
 	L.control.layers(basecarto, feicoes).addTo(map);
 
 	// var osmColorido = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-
-	//Mapbox
-
-var basemap7 = L.tileLayer(
-'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-{
-
-id:"mapbox.high-contrast",
-
-accessToken: "pk.eyJ1IjoiamFxdWVsaW5lcGlzZXR0YSIsImEiOiJjamYycmIxa3AwMXUzMnJvN2pjbTJpOWp5In0.4h6LRhENxZViHfwoaFVZjQ"
-}
-).addTo(map);
-
-
-
-
-//Adicionar camada WMS ao mapa
-L.tileLayer.wms("http://www.idea.ufpr.br/geoserver/geonode/wms"
-, {
-layers: "geonode:cmei",
-transparent: "true",
-format: "image/png"
-}).addTo(map);
-
-//adicionando o shape geojason ciclovia
-L.geoJSON(geojson7, {
-  style: function(feicao){
-        return{
-      weight: 3,
-      color: "#FF0000",
-      fillOpacity: 0
-    }
-  },
-  onEachFeature: function (feicao, camada){
-    camada.bindTooltip(feicao.properties.TIPO)
-  }
-}).addTo(map);
-
-var estiloLinhaPonto = {
-	color: "#00008B",
-	fillColor: "#FA8072",
-	weight: 2,
-	opacity: 50,
-	fillOpacity: 0
-};
-//adicionando o shape
- L.geoJSON(divisadebairros, {
- style: estiloLinhaPonto,
- onEachFeature: function (feicao, camada){
- 	camada.bindTooltip(feicao.properties.NOME)
-  }
-}).addTo(map);
-
-
-
-
-
-//var minimapa = new L.Control.MiniMap(basemap8).addTo(map);
-var osmVisaoGeral = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-L.Control.MiniMap(basemap8).addTo(mapa);
-
-
 
 // Specify divisions every 10 degrees
 L.graticule({ interval: 0.1 }).addTo(map);
@@ -661,5 +639,21 @@ L.graticule({
 
 
 
+map.on('locationfound', onLocationFound);
+map.on('locationerror', onLocationError);
+function onLocationFound(e) {
+	 var radius = e.accuracy / 2;
 
-}
+	 L.marker(e.latlng).addTo(map)
+		 .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+	 L.circle(e.latlng, radius).addTo(map);
+ }
+
+ function onLocationError(e) {
+	 alert(e.message);
+ }
+
+ 	map.locate({setView: true, maxZoom: 11});
+
+ }
